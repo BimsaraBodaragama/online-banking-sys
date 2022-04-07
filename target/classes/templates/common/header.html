@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:fragment="common-header">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>User Front</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css' />
+
+    <!--bootstrap date-time picker-->
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+    <!--data table-->
+    <link href="/css/jquery.dataTable.min.css" rel="stylesheet" />
+    <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <!--<link href="css/scrolling-nav.css" rel="stylesheet" />-->
+    <link href="/css/main.css" rel="stylesheet" />
+</head>
+<body>
+<!-- Navigation -->
+<!--<div th:fragment="navbar">
+    <img class="img-responsive" src="/images/bann.png" alt="bann"/>
+
+    <nav class="navbar navbar-default " role="navigation">
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand page-scroll" th:href="@{/userFront}">Home</a>
+        </div>
+
+        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+        <div class="collapse  navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                &lt;!&ndash; Hidden li included to remove active class from about link when scrolled up past about section &ndash;&gt;
+                <li class="hidden">
+                    <a class="page-scroll" href="#page-top"></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Accounts <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/account/primaryAccount}">Primary</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/account/savingsAccount}">Savings</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transfer <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/transfer/betweenAccounts}">Between Accounts</a></li>
+                        <li><a th:href="@{/transfer/toSomeoneElse}">To Someone Else</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/transfer/recipient}">Add/Edit Recipient</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Me <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/user/profile}">Profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/logout}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        &lt;!&ndash; /.navbar-collapse &ndash;&gt;
+    </div>
+    &lt;!&ndash; /.container &ndash;&gt;
+</nav>
+</div>-->
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <sec:authorize sec:authorize="isAuthenticated()">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion list-group sticky-top sticky-offset"
+            id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/userFront">
+                <div class="sidebar-brand-icon">
+                    <img th:src="@{/assets/pics/trbLogo.jpg}" width="32" height="46">
+                </div>
+                <div class="sidebar-brand-text mx-3">
+                    <div class="t1">NSIS</div>
+                    <div class="t2"> Piliyandala</div>
+                </div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <!--li class="nav-item">
+                <a class="nav-link" href="./">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li-->
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Student Management
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                   aria-expanded="true" aria-controls="collapseTwo">
+                    <!--                    <i class="fas fa-fw fa-graduation-cap"></i>-->
+                    <i class="fas fa-fw fa-address-card"></i>
+                    <span>Main</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                     data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add:</h6>
+                        <a class="collapse-item" href="/student/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Student</a>
+                        <a class="collapse-item" href="/teacher/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Teacher</a>
+                        <a class="collapse-item" href="/class/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Class</a>
+                        <div class="dropdown" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">
+                        <span class="collapse-item dropbtn">Add Assign<i class="fa fa-caret-down"></i>
+                            <div class="dropdown-content">
+                                <a class="collapse-item" href="/assign/add">Assign A Student </a>
+                                <a class="collapse-item" href="/assign/addList">Assign Student List</a>
+                                <a class="collapse-item" href="/assign/switch-students">Promote Class</a>
+                            </div>
+                        </span>
+                        </div>
+                        <a class="collapse-item" href="/discountCoupon/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Discount Coupon</a>
+                        <a class="collapse-item" href="/concession/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Concession</a>
+                        <!--<a class="collapse-item" href="/admin/discountCoupon/add" sec:authorize="hasRole('ROLE_ADMIN')">Add Discount Coupon</a>-->
+
+
+                        <h6 class="collapse-header">Lists:</h6>
+                        <a class="collapse-item" href="/student">List Student</a>
+                        <a class="collapse-item" href="/teacher">List Teacher</a>
+                        <a class="collapse-item" href="/class">List Class</a>
+                        <a class="collapse-item" href="/assign">List Assign</a>
+                        <a class="collapse-item" href="/discountCoupon">List Discount Coupon</a>
+                        <a class="collapse-item" href="/concession">List Concession</a>
+
+                        <h6 class="collapse-header">Search:</h6>
+                        <a class="collapse-item" href="/discountCoupon/search">Search Discount Coupon</a>
+
+                        <h6 class="collapse-header">Past Members:</h6>
+                        <a class="collapse-item" href="/student/leave" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Leave Student</a>
+                        <a class="collapse-item" href="/teacher/leave" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Leave Teacher</a>
+                        <a class="collapse-item" href="/student/left?frequency=All">Left Student</a>
+                        <a class="collapse-item" href="/teacher/left">Left Teacher</a>
+
+                    </div>
+                </div>
+
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseReceipts"
+                   aria-expanded="true" aria-controls="collapseReceipts">
+                    <!--                    <i class="fas fa-fw fa-graduation-cap"></i>-->
+                    <i class="fas fa-fw fa-receipt"></i>
+                    <span>Receipts</span>
+                </a>
+                <div id="collapseReceipts" class="collapse" aria-labelledby="headingReceipts"
+                     data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add:</h6>
+                        <a class="collapse-item" href="/receipt-type/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Receipt Type</a>
+
+
+                        <div class="dropdown" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">
+                        <span class="collapse-item dropbtn">Add Receipt <i class="fa fa-caret-down"></i>
+                            <div class="dropdown-content">
+                                <a class="collapse-item" href="/receipt/schoolFees">Add School Fees Receipts</a>
+                                <a class="collapse-item" href="/receipt/generate">Add Class Wise Receipts</a>
+                                <a class="collapse-item" href="/receipt/add">Add An Individual Receipt</a>
+                            </div>
+                        </span>
+                        </div>
+
+                        <h6 class="collapse-header">List:</h6>
+                        <a class="collapse-item" href="/receipt-type">List Receipt Type</a>
+                        <a class="collapse-item" href="/receipt">List Receipt</a>
+
+                        <h6 class="collapse-header">Search:</h6>
+                        <a class="collapse-item" href="/receipt/search">Search Receipt</a>
+                        <a class="collapse-item" href="/receipt-type/search">Search Receipt Type</a>
+                    </div>
+                </div>
+
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePayments"
+                   aria-expanded="true" aria-controls="collapsePayments">
+                    <!--                    <i class="fas fa-fw fa-graduation-cap"></i>-->
+                    <i class="fas fa-fw fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+                <div id="collapsePayments" class="collapse" aria-labelledby="headingReceipts"
+                     data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add:</h6>
+                        <a class="collapse-item" href="/payment/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Payment</a>
+                        <a class="collapse-item" href="/issue-payment/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Issue Payment</a>
+
+                        <h6 class="collapse-header">List:</h6>
+                        <a class="collapse-item" href="/payment-list">List Payment</a>
+                        <a class="collapse-item" href="/payment-breakdown">List Payment Breakdown</a>
+                        <a class="collapse-item" href="/issue-payment">List Issue Payment</a>
+
+                        <h6 class="collapse-header">Search:</h6>
+                        <!--<a class="collapse-item" href="/payment/search">Search Payment</a>-->
+                        <a class="collapse-item" href="/payment-breakdown/breakdown-search">Search Payment Breakdown</a>
+                        <a class="collapse-item" href="/issue-payment/search">Search Issue Payment</a>
+
+                    </div>
+                </div>
+            </li>
+            <!---->
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseReports"
+                   aria-expanded="true" aria-controls="collapseReports">
+                    <!--                    <i class="fas fa-fw fa-graduation-cap"></i>-->
+                    <i class="fas fa-fw fa-paste"></i>
+                    <span>Reports</span>
+                </a>
+                <div id="collapseReports" class="collapse" aria-labelledby="headingReports"
+                     data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/report-arrears/student">Student Arrears Report</a>
+                        <a class="collapse-item" href="/report-arrears/class">Class Arrears Report</a>
+                        <a class="collapse-item" href="/admin/report/school" sec:authorize="hasRole('ROLE_ADMIN')">School Arrears Report</a>
+                        <a class="collapse-item" href="/bank-record?err=''">Bank Records</a>
+                    </div>
+                </div>
+            </li>
+            <!---->
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <!--            <div class="sidebar-heading">-->
+            <!--                Management-->
+            <!--            </div>-->
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+    </sec:authorize>
+        <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Title -->
+                <sec:authorize sec:authorize="isAuthenticated()">
+                    <h1 class="h3 mb-0 text-gray-800">NSIS Piliyandala</h1>
+                </sec:authorize>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->dash
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                             aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small"
+                                           placeholder="Search for..." aria-label="Search"
+                                           aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <sec:authorize sec:authorize="!isAuthenticated()">
+                            <a class="nav-link dropdown-toggle" href="/login" role="button">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Login</span>
+
+                            </a>
+                        </sec:authorize>
+                        <sec:authorize sec:authorize="isAuthenticated()">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+                                      sec:authentication="principal.username">Admin</span>
+                                <img class="img-profile rounded-circle" th:src="@{/assets/pics/User.png}">
+
+                            </a>
+
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <!--<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Manager
+                                </a>-->
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#RegistrationModal"
+                                   sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Register A New Account
+                                </a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"
+                                   sec:authorize="isAuthenticated()">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                                <!--<div class="form-group">
+    <span>New user? <a href="/home" th:href="@{/registration}">Register here</a></span>
+</div>-->
+
+
+                            </div>
+                        </sec:authorize>
+                    </li>
+
+
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <div layout:fragment="content">
+
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+
+                <div class="copyright text-center my-auto">
+                    <span>The Something Company</span>
+                </div>
+                <div class="copyright text-center my-auto">
+                </div>
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; 2021</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<div th:fragment="body-bottom-scripts">
+    <!-- jQuery -->
+    <script src="/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script src="/js/jquery.easing.min.js"></script>
+
+    <!--bootstrap date-time picker-->
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!--bootbox-->
+    <script src="/js/bootbox.min.js"></script>
+
+    <!--data table-->
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTables.bootstrap.min.js"></script>
+
+    <!--main js-->
+    <script src="/js/main.js"></script>
+</div>
+<script th:src="@{'/assets/bootstrap/vendor/bootstrap/js/bootstrap.min.js'}"></script>
+<script th:src="@{'/assets/bootstrap/vendor/jquery/jquery.min.js'}"></script>
+
+<script th:src="@{'/assets/js/bootstrap-datetimepicker.min.js'}"></script>
+<script th:src="@{'/assets/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js'}"></script>
+<script th:src="@{'/assets/bootstrap/vendor/jquery-easing/jquery.easing.min.js'}"></script>
+<script th:src="@{'/assets/bootstrap/js/sb-admin-2.min.js'}"></script>
+<script>
+
+
+     $(document).ready(function() {
+
+   var url = location.pathname;
+
+            $('.nav-item.active').removeClass('active');
+            $('.nav-item a[href="'+url+'"]').addClass('active');
+            $('.nav-item a[href="'+url+'"]').parent().parent().collapse('show');
+
+
+    });
+
+
+
+
+
+
+</script>
+
+</body>
+<th:block layout:fragment="script"></th:block>
+</html>
