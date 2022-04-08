@@ -1,12 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="common/header :: common-header"/>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<!--<head th:replace="common/header :: common-header"/>-->
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <style>
+        img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+
+    <title>ROYAL ONLINE BANKING PORTAL</title>
+
+    <!--<link rel="shortcut icon" th:href="@{/assets/pics/TheSomethingCompanyLogo1.jpg}" />-->
+    <!--<link rel="shortcut icon" th:href="@{/assets/pics/NSISlogo.png}" />-->
+
+</head>
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">THE ROYAL BANK : ONLINE BANKING PORTAL</a>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
 <!-- Login Section -->
-    <img class="img-responsive" src="/images/bann.png" alt="bann"/>
+
+    <img src="/images/bann.png" alt="bann" class="center">
+
     <div class="container">
         <div class="row ">
-            <div class="main-center ">
+            <div class="col-md-6 col-md-offset-3">
                 <div class="bg-danger" th:if="${param.error}">
                     Invalid username and secret.
                 </div>
@@ -14,7 +52,7 @@
                     You have been logged out.
                 </div>
                 <form class="form-signin" th:action="@{/index}" method="post">
-                    <h2 class="form-signin-heading">Please sign in</h2>
+                    <h2 class="form-signin-heading">Sign in to TRB Online Portal</h2>
                     <div class="form-group">
                         <label for="username" class="sr-only">Username</label>
                         <input type="text" roleId="username" class="form-control" placeholder="Username" name="username"
@@ -30,14 +68,56 @@
                     <div class="form-group">
                         <input type="checkbox" name="remember-me" id="remember-me"/> &nbsp; Remember me
                     </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
-                
+
                 <hr />
-                
+
                 <div class="form-group ">
-                    <a type="submit" class="btn btn-info btn-lg btn-block login-button" th:href="@{/signup}">Sign up!</a>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <a type="submit" class="btn btn-info btn-lg btn-block login-button" th:href="@{/signup}">Sign up!</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+
+                <!--<div class="copyright text-center my-auto">
+                    <img th:href="@{/assets/pics/TheSomethingCompanyLogo1.jpg}" width="700" height="300">
+                </div>-->
+
+                <div class="copyright text-center my-auto">
+                    <span>The Something Company</span>
+                </div>
+                <div class="copyright text-center my-auto">
+                </div>
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; 2022</span>
+                </div>
+                <!--<div class="copyright text-center my-auto">
+                </div>
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; 2021</span>
+                </div>-->
+            </div>
+        </footer>
     </div>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
+
