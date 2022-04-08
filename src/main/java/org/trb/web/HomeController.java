@@ -1,10 +1,13 @@
 package org.trb.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.trb.repository.RoleRepository;
 import org.trb.model.PrimaryAccount;
 import org.trb.model.SavingsAccount;
 import org.trb.model.User;
 import org.trb.model.security.UserRole;
+import org.trb.repository.UserRepository;
 import org.trb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,17 +17,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
 public class HomeController {
+
+    Logger log = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	private UserService userService;
 	
 	@Autowired
     private RoleRepository rolerepository;
+
+	@Autowired
+    private UserRepository userRepository;
 	
 	@RequestMapping("/")
 	public String home() {
@@ -48,8 +58,41 @@ public class HomeController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signupPost(@ModelAttribute("user") User user,  Model model) {
 
-        if(userService.checkUserExists(user.getUsername(), user.getEmail()))  {
+	    PrimaryAccount primaryAccount = new PrimaryAccount();
+	    primaryAccount.setAccountNumber(user.getPrimaryAccountNo());
+	    primaryAccount.setAccountBalance(user.getPrimaryAccountBalance());
+	    user.setPrimaryAccount(primaryAccount);
 
+	    SavingsAccount savingsAccount = new SavingsAccount();
+	    savingsAccount.setAccountNumber(user.getSavingsAccountNo());
+	    savingsAccount.setAccountBalance(user.getSavingsAccountBalance());
+	    user.setSavingsAccount(savingsAccount);
+
+	    user.setRecipientList(new ArrayList<>());
+	    /*user.setUserRoles(new HashSet<>());
+
+        List<User> allUsers = userRepository.findAll();
+        int allUserSize = allUsers.size();
+        Long lastUserId = Long.valueOf(allUserSize);
+        user.setUserId(lastUserId++);*/
+
+        log.info("Passed!");
+        log.info(user.getUsername());
+        log.info(user.getEmail());
+        log.info(user.getFirstName());
+        log.info(user.getLastName());
+        log.info(user.getPassword());
+        log.info(user.getPhone());
+        log.info(user.getAuthorities().toString());
+        log.info(user.getPrimaryAccount().toString());
+        log.info(user.getSavingsAccount().toString());
+        log.info("AAA");
+        //log.info(user.getRecipientList().toString());
+        //log.info(user.getUserId().toString());
+        //log.info(user.getUserRoles().toString());
+
+        if(userService.checkUserExists(user.getUsername(), user.getEmail()))  {
+            log.info("BBB");
             if (userService.checkEmailExists(user.getEmail())) {
                 model.addAttribute("emailExists", true);
             }
@@ -60,10 +103,12 @@ public class HomeController {
 
             return "signup";
         } else {
+            log.info("CCC");
         	 Set<UserRole> userRoles = new HashSet<>();
              userRoles.add(new UserRole(user, rolerepository.findByName("ROLE_USER")));
-
+            log.info("DDD");
             userService.createUser(user, userRoles);
+            log.info("EEE");
 
             return "redirect:/";
         }

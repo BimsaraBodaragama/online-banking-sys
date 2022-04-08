@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +43,15 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<UserRole> userRoles = new HashSet<>();
+
+    @Transient
+    private int primaryAccountNo;
+    @Transient
+    private int savingsAccountNo;
+    @Transient
+    private BigDecimal primaryAccountBalance;
+    @Transient
+    private BigDecimal savingsAccountBalance;
 
     public Set<UserRole> getUserRoles() {
         return userRoles;
@@ -180,5 +190,35 @@ public class User implements UserDetails{
         return enabled;
     }
 
+    public int getPrimaryAccountNo() {
+        return primaryAccountNo;
+    }
 
+    public void setPrimaryAccountNo(int primaryAccountNo) {
+        this.primaryAccountNo = primaryAccountNo;
+    }
+
+    public int getSavingsAccountNo() {
+        return savingsAccountNo;
+    }
+
+    public void setSavingsAccountNo(int savingsAccountNo) {
+        this.savingsAccountNo = savingsAccountNo;
+    }
+
+    public BigDecimal getPrimaryAccountBalance() {
+        return primaryAccountBalance;
+    }
+
+    public void setPrimaryAccountBalance(BigDecimal primaryAccountBalance) {
+        this.primaryAccountBalance = primaryAccountBalance;
+    }
+
+    public BigDecimal getSavingsAccountBalance() {
+        return savingsAccountBalance;
+    }
+
+    public void setSavingsAccountBalance(BigDecimal savingsAccountBalance) {
+        this.savingsAccountBalance = savingsAccountBalance;
+    }
 }

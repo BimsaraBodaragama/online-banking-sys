@@ -48,22 +48,35 @@ public class UserServiceImpl implements UserService{
     
     
     public User createUser(User user, Set<UserRole> userRoles) {
+
+	    LOG.info("FFF");
+
         User localUser = userrepository.findByUsername(user.getUsername());
+
+        LOG.info("GGG");
 
         if (localUser != null) {
             LOG.info("User with username {} already exist. Nothing will be done. ", user.getUsername());
         } else {
+
+            LOG.info("HHH");
             String encryptedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(encryptedPassword);
 
+            LOG.info("III");
+            LOG.info(String.valueOf(userRoles.size()));
             for (UserRole ur : userRoles) {
+                LOG.info("III---111");
+                LOG.info(ur.getUser().getUserId().toString());
+                LOG.info(ur.getRole().getName());
                 rolerepository.save(ur.getRole());
+                LOG.info("III---222");
             }
-
+            LOG.info("JJJ");
             user.getUserRoles().addAll(userRoles);
-
-            user.setPrimaryAccount(accountService.createPrimaryAccount());
-            user.setSavingsAccount(accountService.createSavingsAccount());
+            LOG.info("KKK");
+            //user.setPrimaryAccount(accountService.createPrimaryAccount());
+            //user.setSavingsAccount(accountService.createSavingsAccount());
 
             localUser = userrepository.save(user);
         }
