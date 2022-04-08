@@ -1,6 +1,9 @@
 package org.trb.service.UserServiceImpl;
 
+import org.trb.model.security.Role;
+import org.trb.repository.PrimaryAccountRepository;
 import org.trb.repository.RoleRepository;
+import org.trb.repository.SavingsAccountRepository;
 import org.trb.repository.UserRepository;
 import org.trb.model.User;
 import org.trb.model.security.UserRole;
@@ -13,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +37,13 @@ public class UserServiceImpl implements UserService{
     
     @Autowired
     private AccountService accountService;
-	
+
+    @Autowired
+    private PrimaryAccountRepository primaryAccountrepository;
+
+    @Autowired
+    private SavingsAccountRepository savingsAccountrepository;
+
 	public void save(User user) {
         userrepository.save(user);
     }
@@ -49,34 +59,40 @@ public class UserServiceImpl implements UserService{
     
     public User createUser(User user, Set<UserRole> userRoles) {
 
-	    LOG.info("FFF");
 
         User localUser = userrepository.findByUsername(user.getUsername());
 
-        LOG.info("GGG");
 
         if (localUser != null) {
             LOG.info("User with username {} already exist. Nothing will be done. ", user.getUsername());
         } else {
 
-            LOG.info("HHH");
             String encryptedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(encryptedPassword);
 
-            LOG.info("III");
             LOG.info(String.valueOf(userRoles.size()));
             for (UserRole ur : userRoles) {
-                LOG.info("III---111");
-                LOG.info(ur.getUser().getUserId().toString());
-                LOG.info(ur.getRole().getName());
+                ur.setUser(user);
+
+                Role role = new Role();
+                Iterable<Role> allRoles = rolerepository.findAll();
+                int i = 0;
+                for(Role r : allRoles){
+                    i += 1;
+                }
+                role.setRoleId(++i);
+                role.setName("ROLE_USER");
+                role.setUserRoles(new HashSet<>());
+                ur.setRole(role);
                 rolerepository.save(ur.getRole());
-                LOG.info("III---222");
+
             }
-            LOG.info("JJJ");
             user.getUserRoles().addAll(userRoles);
-            LOG.info("KKK");
-            //user.setPrimaryAccount(accountService.createPrimaryAccount());
-            //user.setSavingsAccount(accountService.createSavingsAccount());
+
+            /*user.setPrimaryAccount(accountService.createPrimaryAccount());
+            user.setSavingsAccount(accountService.createSavingsAccount());*/
+            primaryAccountrepository.save(user.getPrimaryAccount());
+            savingsAccountrepository.save(user.getSavingsAccount());
 
             localUser = userrepository.save(user);
         }

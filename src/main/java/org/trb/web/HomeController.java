@@ -69,14 +69,13 @@ public class HomeController {
 	    user.setSavingsAccount(savingsAccount);
 
 	    user.setRecipientList(new ArrayList<>());
-	    /*user.setUserRoles(new HashSet<>());
+	    /*user.setUserRoles(new HashSet<>());*/
 
         List<User> allUsers = userRepository.findAll();
         int allUserSize = allUsers.size();
         Long lastUserId = Long.valueOf(allUserSize);
-        user.setUserId(lastUserId++);*/
+        user.setUserId(++lastUserId);
 
-        log.info("Passed!");
         log.info(user.getUsername());
         log.info(user.getEmail());
         log.info(user.getFirstName());
@@ -86,13 +85,11 @@ public class HomeController {
         log.info(user.getAuthorities().toString());
         log.info(user.getPrimaryAccount().toString());
         log.info(user.getSavingsAccount().toString());
-        log.info("AAA");
         //log.info(user.getRecipientList().toString());
         //log.info(user.getUserId().toString());
         //log.info(user.getUserRoles().toString());
 
         if(userService.checkUserExists(user.getUsername(), user.getEmail()))  {
-            log.info("BBB");
             if (userService.checkEmailExists(user.getEmail())) {
                 model.addAttribute("emailExists", true);
             }
@@ -103,12 +100,9 @@ public class HomeController {
 
             return "signup";
         } else {
-            log.info("CCC");
         	 Set<UserRole> userRoles = new HashSet<>();
              userRoles.add(new UserRole(user, rolerepository.findByName("ROLE_USER")));
-            log.info("DDD");
-            userService.createUser(user, userRoles);
-            log.info("EEE");
+             userService.createUser(user, userRoles);
 
             return "redirect:/";
         }
