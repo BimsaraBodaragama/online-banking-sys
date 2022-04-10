@@ -14,7 +14,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	zoomEnabled: true,
 
 	axisX: {
-	    title: "Payment Date",
+	    title: "Date",
 		crosshair: {
 			enabled: true,
       snapToDataPoint: true,
@@ -22,7 +22,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		}
 	},
 	axisY: {
-		title: "Payment Amount (LKR)",
+		title: "Amount (LKR)",
 		crosshair: {
 			enabled: true,
 			snapToDataPoint: true,
@@ -42,17 +42,18 @@ var chart = new CanvasJS.Chart("chartContainer", {
 
 }
 
-$( "#chartByPaymentDate" ).click(function() {
+$( "#chartByPaymentDate_PA" ).click(function() {
 //PaymentDate
     var url = location.href;
 
+    var primaryAccountNumber = $('#primaryAccountNumber').val();
     var paymentDateFrom = $('#paymentDateFromChart').val();
     paymentDateFrom = paymentDateFrom.replaceAll('/','-');
     var paymentDateTo = $('#paymentDateToChart').val();
     paymentDateTo = paymentDateTo.replaceAll('/','-');
     if(paymentDateFrom=="" || paymentDateTo==""){
-    if(paymentDateFrom==""){alert("To Get Payment Chart, Please Enter The Payment Date From First");}
-    if(paymentDateTo==""){alert("To Get Payment Chart, Please Enter The Payment Date Up to First");}
+    if(paymentDateFrom==""){alert("To Get Transaction Chart, Please Enter The Date From First");}
+    if(paymentDateTo==""){alert("To Get Transaction Chart, Please Enter The Date Up to First");}
     }else{
         //rIssueDate = formatSetterYYtoYYYY(rIssueDate);
         //var date = setSearchPathVariable(rIssueDate);
@@ -61,9 +62,9 @@ $( "#chartByPaymentDate" ).click(function() {
 
         var newUrl;
         if(url.split('/').length<=4){
-            newUrl = url + "/paymentChart/"+date;
+            newUrl = url + "/paymentChart_PA/"+date+"/"+primaryAccountNumber;
         }else{
-            newUrl = "../paymentChart/"+date;
+            newUrl = "../paymentChart_PA/"+date+"/"+primaryAccountNumber;
         }
 
         $.ajax

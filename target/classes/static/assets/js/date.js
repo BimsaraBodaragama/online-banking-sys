@@ -305,20 +305,23 @@ $('#discountCouponIssueDateTo').datepicker({
     // $('#paymentDateToSAP').datepicker("setDate", new Date());
 
 
-$('#paymentDateToChart').datepicker({
+$('#paymentDateToChart_1').datepicker({
         weekStart: 1,
         daysOfWeekHighlighted: "6,0",
         autoclose: true,
         todayHighlight: true,
     });
 
-$('#paymentDateFromChart').datepicker({
+$('#paymentDateToChart_1').datepicker("setDate", new Date());
+
+$('#paymentDateFromChart_1').datepicker({
         weekStart: 1,
         daysOfWeekHighlighted: "6,0",
         autoclose: true,
         todayHighlight: true,
     });
 
+$('#paymentDateFromChart_1').datepicker("setDate", new Date());
 //Report Generation
 
 $('#fromDateSchool').datepicker({

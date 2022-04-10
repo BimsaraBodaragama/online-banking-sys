@@ -3,9 +3,9 @@ window.onload = function() {
     var url = location.href;
     var newUrl;
     if(url.split('/').length<=4){
-        newUrl = url + "/paymentChart";
+        newUrl = url + "/paymentChart_PA";
     }else{
-        newUrl = "../paymentChart";
+        newUrl = "../paymentChart_PA";
     }
 
     $.ajax
@@ -49,7 +49,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	zoomEnabled: true,
 
 	axisX: {
-	    title: "Payment Date",
+	    title: "Date",
 		crosshair: {
 			enabled: true,
       snapToDataPoint: true,
@@ -57,7 +57,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		}
 	},
 	axisY: {
-		title: "Payment Amount (LKR)",
+		title: "Amount (LKR)",
 		crosshair: {
 			enabled: true,
 			snapToDataPoint: true,
