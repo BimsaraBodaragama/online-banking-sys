@@ -27,7 +27,7 @@ public class MainController {
 
     @GetMapping("/")
     public String root(Model model) {
-        return "redirect:/home";
+        return "redirect:/userFront";
     }
 
     @GetMapping("/login")
