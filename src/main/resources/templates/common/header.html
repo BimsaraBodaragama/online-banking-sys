@@ -1,95 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-
-<head th:fragment="common-header">
-
+<head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <title>User Front</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">TRB ONLINE</title>
 
-    <!-- Website Font style -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+    <link rel="shortcut icon" th:href="@{/assets/pics/trbLogo.jpg}" />
 
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css' />
-    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css' />
+    <meta
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            name="viewport"/>
 
-    <!--bootstrap date-time picker-->
-    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/vendor/fontawesome-free/css/all.min.css}"/>
 
-    <!--data table-->
-    <link href="/css/jquery.dataTable.min.css" rel="stylesheet" />
-    <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template-->
 
-    <!-- Custom CSS -->
-    <!--<link href="css/scrolling-nav.css" rel="stylesheet" />-->
-    <link href="/css/main.css" rel="stylesheet" />
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/css/bootstrap-datetimepicker.min.css}">
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/css/sb-admin-2.min.css}">
+    <style>
+        .t1 {
+            font-weight: bolder;
+            font-size: 30px;
+            font-family: "Times New Roman", Times, serif;
+            }
+
+        .t2 {
+            font-size: 11px;
+            font-family: "Courier New",Monospace;
+            }
+
+        .dropbtn {
+              cursor: pointer;
+              background: transparent;
+              box-shadow: 0px 0px 0px transparent;
+              border: 0px solid transparent;
+              text-shadow: 0px 0px 0px transparent;
+            }
+
+        .dropdown {
+          position: relative;
+        }
+
+        .dropdown-content {
+          display: none;
+          background-color:white;
+          position: absolute;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+
+        .dropdown-content a:hover {background-color:white;}
+
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+          background: transparent;
+          box-shadow: 0px 0px 0px transparent;
+          border: 0px solid transparent;
+          text-shadow: 0px 0px 0px transparent;
+        }
+    </style>
 </head>
-<body>
-<!-- Navigation -->
-<!--<div th:fragment="navbar">
-    <img class="img-responsive" src="/images/bann.png" alt="bann"/>
-
-    <nav class="navbar navbar-default " role="navigation">
-    <div class="container">
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand page-scroll" th:href="@{/userFront}">Home</a>
-        </div>
-
-        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
-        <div class="collapse  navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                &lt;!&ndash; Hidden li included to remove active class from about link when scrolled up past about section &ndash;&gt;
-                <li class="hidden">
-                    <a class="page-scroll" href="#page-top"></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Accounts <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="@{/account/primaryAccount}">Primary</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/account/savingsAccount}">Savings</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transfer <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="@{/transfer/betweenAccounts}">Between Accounts</a></li>
-                        <li><a th:href="@{/transfer/toSomeoneElse}">To Someone Else</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/transfer/recipient}">Add/Edit Recipient</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Me <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="@{/user/profile}">Profile</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/logout}">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        &lt;!&ndash; /.navbar-collapse &ndash;&gt;
-    </div>
-    &lt;!&ndash; /.container &ndash;&gt;
-</nav>
-</div>-->
+<body id="page-top">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -105,8 +94,8 @@
                     <img th:src="@{/assets/pics/trbLogo.jpg}" width="32" height="46">
                 </div>
                 <div class="sidebar-brand-text mx-3">
-                    <div class="t1">NSIS</div>
-                    <div class="t2"> Piliyandala</div>
+                    <div class="t1">ROYAL</div>
+                    <div class="t2">ONLINE BANKING</div>
                 </div>
             </a>
 
@@ -125,7 +114,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Student Management
+                SELECTION BAR
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -134,46 +123,13 @@
                    aria-expanded="true" aria-controls="collapseTwo">
                     <!--                    <i class="fas fa-fw fa-graduation-cap"></i>-->
                     <i class="fas fa-fw fa-address-card"></i>
-                    <span>Main</span>
+                    <span>Accounts</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add:</h6>
-                        <a class="collapse-item" href="/student/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Student</a>
-                        <a class="collapse-item" href="/teacher/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Teacher</a>
-                        <a class="collapse-item" href="/class/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Class</a>
-                        <div class="dropdown" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">
-                        <span class="collapse-item dropbtn">Add Assign<i class="fa fa-caret-down"></i>
-                            <div class="dropdown-content">
-                                <a class="collapse-item" href="/assign/add">Assign A Student </a>
-                                <a class="collapse-item" href="/assign/addList">Assign Student List</a>
-                                <a class="collapse-item" href="/assign/switch-students">Promote Class</a>
-                            </div>
-                        </span>
-                        </div>
-                        <a class="collapse-item" href="/discountCoupon/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Discount Coupon</a>
-                        <a class="collapse-item" href="/concession/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Concession</a>
-                        <!--<a class="collapse-item" href="/admin/discountCoupon/add" sec:authorize="hasRole('ROLE_ADMIN')">Add Discount Coupon</a>-->
-
-
-                        <h6 class="collapse-header">Lists:</h6>
-                        <a class="collapse-item" href="/student">List Student</a>
-                        <a class="collapse-item" href="/teacher">List Teacher</a>
-                        <a class="collapse-item" href="/class">List Class</a>
-                        <a class="collapse-item" href="/assign">List Assign</a>
-                        <a class="collapse-item" href="/discountCoupon">List Discount Coupon</a>
-                        <a class="collapse-item" href="/concession">List Concession</a>
-
-                        <h6 class="collapse-header">Search:</h6>
-                        <a class="collapse-item" href="/discountCoupon/search">Search Discount Coupon</a>
-
-                        <h6 class="collapse-header">Past Members:</h6>
-                        <a class="collapse-item" href="/student/leave" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Leave Student</a>
-                        <a class="collapse-item" href="/teacher/leave" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Leave Teacher</a>
-                        <a class="collapse-item" href="/student/left?frequency=All">Left Student</a>
-                        <a class="collapse-item" href="/teacher/left">Left Teacher</a>
-
+                        <a class="collapse-item" href="/account/primaryAccount">Primary Account</a>
+                        <a class="collapse-item" href="/account/savingsAccount">Savings Account</a>
                     </div>
                 </div>
 
@@ -184,32 +140,13 @@
                    aria-expanded="true" aria-controls="collapseReceipts">
                     <!--                    <i class="fas fa-fw fa-graduation-cap"></i>-->
                     <i class="fas fa-fw fa-receipt"></i>
-                    <span>Receipts</span>
+                    <span>Transfer</span>
                 </a>
                 <div id="collapseReceipts" class="collapse" aria-labelledby="headingReceipts"
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add:</h6>
-                        <a class="collapse-item" href="/receipt-type/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Receipt Type</a>
-
-
-                        <div class="dropdown" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">
-                        <span class="collapse-item dropbtn">Add Receipt <i class="fa fa-caret-down"></i>
-                            <div class="dropdown-content">
-                                <a class="collapse-item" href="/receipt/schoolFees">Add School Fees Receipts</a>
-                                <a class="collapse-item" href="/receipt/generate">Add Class Wise Receipts</a>
-                                <a class="collapse-item" href="/receipt/add">Add An Individual Receipt</a>
-                            </div>
-                        </span>
-                        </div>
-
-                        <h6 class="collapse-header">List:</h6>
-                        <a class="collapse-item" href="/receipt-type">List Receipt Type</a>
-                        <a class="collapse-item" href="/receipt">List Receipt</a>
-
-                        <h6 class="collapse-header">Search:</h6>
-                        <a class="collapse-item" href="/receipt/search">Search Receipt</a>
-                        <a class="collapse-item" href="/receipt-type/search">Search Receipt Type</a>
+                        <a class="collapse-item" href="/transfer/betweenAccounts">Between My Accounts</a>
+                        <a class="collapse-item" href="/transfer/toSomeoneElse">To a Payee</a>
                     </div>
                 </div>
 
@@ -220,25 +157,13 @@
                    aria-expanded="true" aria-controls="collapsePayments">
                     <!--                    <i class="fas fa-fw fa-graduation-cap"></i>-->
                     <i class="fas fa-fw fa-credit-card"></i>
-                    <span>Payments</span>
+                    <span>Deposit & Withdraw</span>
                 </a>
                 <div id="collapsePayments" class="collapse" aria-labelledby="headingReceipts"
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add:</h6>
-                        <a class="collapse-item" href="/payment/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Payment</a>
-                        <a class="collapse-item" href="/issue-payment/add" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ACTUATOR')">Add Issue Payment</a>
-
-                        <h6 class="collapse-header">List:</h6>
-                        <a class="collapse-item" href="/payment-list">List Payment</a>
-                        <a class="collapse-item" href="/payment-breakdown">List Payment Breakdown</a>
-                        <a class="collapse-item" href="/issue-payment">List Issue Payment</a>
-
-                        <h6 class="collapse-header">Search:</h6>
-                        <!--<a class="collapse-item" href="/payment/search">Search Payment</a>-->
-                        <a class="collapse-item" href="/payment-breakdown/breakdown-search">Search Payment Breakdown</a>
-                        <a class="collapse-item" href="/issue-payment/search">Search Issue Payment</a>
-
+                        <a class="collapse-item" href="/account/deposit">Deposit</a>
+                        <a class="collapse-item" href="/account/withdraw">Withdraw</a>
                     </div>
                 </div>
             </li>
@@ -248,15 +173,12 @@
                    aria-expanded="true" aria-controls="collapseReports">
                     <!--                    <i class="fas fa-fw fa-graduation-cap"></i>-->
                     <i class="fas fa-fw fa-paste"></i>
-                    <span>Reports</span>
+                    <span>Payees</span>
                 </a>
                 <div id="collapseReports" class="collapse" aria-labelledby="headingReports"
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/report-arrears/student">Student Arrears Report</a>
-                        <a class="collapse-item" href="/report-arrears/class">Class Arrears Report</a>
-                        <a class="collapse-item" href="/admin/report/school" sec:authorize="hasRole('ROLE_ADMIN')">School Arrears Report</a>
-                        <a class="collapse-item" href="/bank-record?err=''">Bank Records</a>
+                        <a class="collapse-item" href="/transfer/recipient">Add/Edit Payee</a>
                     </div>
                 </div>
             </li>
@@ -282,7 +204,7 @@
 
         </ul>
     </sec:authorize>
-        <!-- End of Sidebar -->
+    <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -300,7 +222,7 @@
 
                 <!-- Topbar Title -->
                 <sec:authorize sec:authorize="isAuthenticated()">
-                    <h1 class="h3 mb-0 text-gray-800">NSIS Piliyandala</h1>
+                    <h1 class="h3 mb-0 text-gray-800">THE ROYAL BANK</h1>
                 </sec:authorize>
 
                 <!-- Topbar Navbar -->
@@ -369,7 +291,7 @@
                                     Logout
                                 </a>
                                 <!--<div class="form-group">
-    <span>New user? <a href="/home" th:href="@{/registration}">Register here</a></span>
+    <span>New user? <a href="/userFront" th:href="@{/registration}">Register here</a></span>
 </div>-->
 
 
@@ -406,7 +328,7 @@
                 <div class="copyright text-center my-auto">
                 </div>
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; 2021</span>
+                    <span>Copyright &copy; 2022</span>
                 </div>
             </div>
         </footer>
@@ -418,28 +340,291 @@
 </div>
 <!-- End of Page Wrapper -->
 
-<div th:fragment="body-bottom-scripts">
-    <!-- jQuery -->
-    <script src="/js/jquery.js"></script>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/js/bootstrap.min.js"></script>
-
-    <script src="/js/jquery.easing.min.js"></script>
-
-    <!--bootstrap date-time picker-->
-    <script src="/js/bootstrap-datetimepicker.min.js"></script>
-
-    <!--bootbox-->
-    <script src="/js/bootbox.min.js"></script>
-
-    <!--data table-->
-    <script src="/js/jquery.dataTables.min.js"></script>
-    <script src="/js/dataTables.bootstrap.min.js"></script>
-
-    <!--main js-->
-    <script src="/js/main.js"></script>
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+<!-- Registration Modal-->
+<div class="modal fade" id="RegistrationModal" tabindex="-1" role="dialog" aria-labelledby="RegistrationModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="RegistrationModalLabel">Add a new Actuator Account</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Register Here" below if you want to add a new non-admin user to the system.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" th:href="@{/registration}">Register Here</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- leave msg Modal -->
+<div class="modal fade" id="exampleModalLve" tabindex="-1" role="dialog" aria-labelledby="leaveModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="leaveModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Confirm the Leaving
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" id="modalLveButton" href="" role="button">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- leave msg Modal Class -->
+<div class="modal fade" id="exampleModalLveCls" tabindex="-1" role="dialog" aria-labelledby="leaveModalLabelCls"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="leaveModalLabelCls">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Confirm the Leaving
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" id="modalLveButtonCls" href="" role="button">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- re add msg Modal -->
+<div class="modal fade" id="exampleModalRad" tabindex="-1" role="dialog" aria-labelledby="reAddModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reAddModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Confirm the Re Assign
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" id="modalRadButton" href="" role="button">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- add payments to receipt msg Modal -->
+<div class="modal fade" id="exampleModalAddPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalAddPayment"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPaymentModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Confirm the Payment
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" id="modalAddPaymentButton" href="" role="button">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- disable (discount-coupon) msg Modal -->
+<div class="modal fade" id="exampleModalDisable" tabindex="-1" role="dialog" aria-labelledby="disableModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="disableModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to Disable the Discount Coupon?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" id="modalDisableButton" href="" role="button">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- enable (discount-coupon) msg Modal -->
+<div class="modal fade" id="exampleModalEnable" tabindex="-1" role="dialog" aria-labelledby="enableModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="enableModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to Enable the Discount Coupon?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" id="modalEnableButton" href="" role="button">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- delete receipt Modal -->
+<div class="modal fade" id="receiptDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteReceiptModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteReceiptModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="shadow text-xs font-weight-bold text-danger text-uppercase mb-1 text-center">HIGHLY DEPRECIATED!!!</div><br>
+                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">If you delete this Receipt, all the Payments which have done onto this Receipt will be deleted. Are you Sure You want to delete this Receipt?
+                </div><br>
+                Confirm the Deletion
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a class="btn btn-primary" id="modalConfirmButton" href="" role="button">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- delete record Modal -->
+<div class="modal fade" id="recordDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteRecordModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteRecordModalLabel">Delete Bank Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Confirm the Deletion
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a class="btn btn-primary" id="modalConfirmButton" href="" role="button">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- delete msg Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Confirm the Deletion
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a class="btn btn-primary" id="modalDelButton" href="" role="button">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- input Modal -->
+<div class="modal fade" id="inoutModal" tabindex="-1" role="dialog" aria-labelledby="inoutModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inoutModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="url-to-call" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-new-number" class="col-form-label" id="main-label-id">Count:</label>
+                        <input type="text" class="form-control" id="modal-new-number">
+                    </div>
+                    <div class="form-group" id="input-modal-2" style="display: none;">
+                        <label for="modal-new-number" class="col-form-label" id="main-label-id2">Count2:</label>
+                        <input type="text" class="form-control" id="modal-new-number2">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="modalAddButton">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script th:src="@{'/assets/bootstrap/vendor/bootstrap/js/bootstrap.min.js'}"></script>
 <script th:src="@{'/assets/bootstrap/vendor/jquery/jquery.min.js'}"></script>
 
@@ -467,7 +652,7 @@
 
 
 </script>
-
 </body>
+
 <th:block layout:fragment="script"></th:block>
 </html>
