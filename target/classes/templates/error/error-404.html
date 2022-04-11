@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="common/header">
+
+<head>
+  <title>Error: 404</title>
+
+  <link rel="stylesheet"
+        th:href="@{/assets/css/home.css}"/>
+
+  <style>
+            .tab {
+        display: inline-block;
+        margin-left: 40px;
+            }
+    </style>
+</head>
+<body>
+
+<div layout:fragment="content">
+  <h1 class="h3 mb-0 text-gray-800">Error 404</h1>
+
+  <div class="bd-example">
+
+
+    <div th:switch="${msg}" class="container my-5">
+
+      <div class="col-md-10">
+        <div th:case="null">
+          <div class="alert alert-danger" role="alert">
+            <p>Page that you are looking for, is missing!</p>
+          </div>
+        </div>
+        <div th:case="*">
+          <div class="alert alert-danger" role="alert">
+            <p th:text="${msg}">Page is missing!</p>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -42,13 +42,17 @@ public class TransferController {
             @ModelAttribute("transferFrom") String transferFrom,
             @ModelAttribute("transferTo") String transferTo,
             @ModelAttribute("amount") String amount,
-            Principal principal
-    ) throws Exception {
-        User user = userService.findByUsername(principal.getName());
-        PrimaryAccount primaryAccount = user.getPrimaryAccount();
-        SavingsAccount savingsAccount = user.getSavingsAccount();
-        transactionService.betweenAccountsTransfer(transferFrom, transferTo, amount, primaryAccount, savingsAccount);
-
+            Principal principal, Model model
+    ){
+        try {
+            User user = userService.findByUsername(principal.getName());
+            PrimaryAccount primaryAccount = user.getPrimaryAccount();
+            SavingsAccount savingsAccount = user.getSavingsAccount();
+            transactionService.betweenAccountsTransfer(transferFrom, transferTo, amount, primaryAccount, savingsAccount);
+        }catch (Exception e){
+            model.addAttribute("msg", "Invalid Transfer!");
+            return "/error/custom-info";
+        }
         return "redirect:/userFront";
     }
     
