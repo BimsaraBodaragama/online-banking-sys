@@ -1,84 +1,238 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="common/header :: common-header"/>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="common/header">
+
+<head>
+    <title>Home</title>
+
+    <link rel="stylesheet"
+          th:href="@{/assets/css/home.css}"/>
+
+    <style>
+            .tab {
+        display: inline-block;
+        margin-left: 40px;
+            }
+    </style>
+
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/vendor/fontawesome-free/css/v4-shims.css}"/>
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/vendor/fontawesome-free/css/v4-shims.css}"/>
+
+</head>
+
+<!--<head th:replace="common/header :: common-header"/>-->
 <body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-<head th:replace="common/header :: navbar"/>
-<div class="container main">
+<!--<head th:replace="common/header :: navbar"/>-->
+
+<div layout:fragment="content">
+
+    <!--<div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Deposit</h1>
+        &lt;!&ndash;        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i&ndash;&gt;
+        &lt;!&ndash;                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>&ndash;&gt;
+    </div>-->
+
+    <!--<div class="row">
+        <div class="col-xl-12 col-md-2 mb-6">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="text-center">
+                            <h1>DEPOSIT</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+    </div>
+
+    <!-- Content Row 1 -->
     <div class="row">
-        <div class="col-md-6">
-            <h3>Recipient Information</h3>
-            <form th:action="@{/transfer/recipient/save}" method="post">
-                <input type="hidden" name="id" th:value="${recipient.id}" />
 
-                <div class="form-group">
-                    <label for="recipientName">Name</label>
-                    <input type="text" class="form-control" th:value="${recipient.name}" name="name"
-                           id="recipientName" placeholder="Name"/>
+        <!-- Earnings (Monthly) Card Example -->
+        <!--<div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Number of Current Students
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                <td th:text="${studentCurrentCount}">..</td>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="recipientEmail">Email</label>
-                    <input type="email" class="form-control" th:value="${recipient.email}" name="email"
-                           id="recipientEmail" placeholder="Email"/>
-                </div>
-                <div class="form-group">
-                    <label for="recipientPhone">Phone</label>
-                    <input type="text" class="form-control" th:value="${recipient.phone}" name="phone"
-                           id="recipientPhone" placeholder="Phone"/>
-                </div>
-                <div class="form-group">
-                    <label for="recipientAccountNumber">Account Number</label>
-                    <input type="text" class="form-control" th:value="${recipient.accountNumber}"
-                           name="accountNumber" id="recipientAccountNumber" placeholder="Account Number"/>
-                </div>
-                <div class="form-group">
-                    <label for="recipientDescription">Description</label>
-                    <textarea class="form-control" th:value="${recipient.description}" name="description"
-                              id="recipientDescription" placeholder="Description" th:text="${recipient.description}"></textarea>
-                </div>
+            </div>
+        </div>-->
 
-                <input type="hidden"
-                       name="${_csrf.parameterName}"
-                       value="${_csrf.token}"/>
 
-                <button class="btn btn-primary" type="submit">Add/Edit Recipient</button>
-            </form>
+        <div class="col-xl-8 col-md-3 mb-6">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="card-header text-center py-3">
+                                <h6 class="m-0 font-weight-bold text-secondary">Payee Information</h6>
+                            </div>
+                            <form th:action="@{/transfer/recipient/save}" method="post">
+                                <input type="hidden" name="id" th:value="${recipient.id}" />
 
-            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="recipientName">Name</label>
+                                    <input type="text" class="form-control" th:value="${recipient.name}" name="name"
+                                           id="recipientName" placeholder="Name"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipientEmail">Email</label>
+                                    <input type="email" class="form-control" th:value="${recipient.email}" name="email"
+                                           id="recipientEmail" placeholder="Email"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipientPhone">Phone No</label>
+                                    <input type="text" class="form-control" th:value="${recipient.phone}" name="phone"
+                                           id="recipientPhone" placeholder="Phone"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipientAccountNumber">Account Number</label>
+                                    <input type="text" class="form-control" th:value="${recipient.accountNumber}"
+                                           name="accountNumber" id="recipientAccountNumber" placeholder="Account Number"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipientDescription">Description</label>
+                                    <textarea class="form-control" th:value="${recipient.description}" name="description"
+                                              id="recipientDescription" placeholder="Description" th:text="${recipient.description}"></textarea>
+                                </div>
+
+                                <input type="hidden"
+                                       name="${_csrf.parameterName}"
+                                       value="${_csrf.token}"/>
+
+                                <button class="btn btn-primary" type="submit">Add/Edit Payee</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-3 mb-6">
+            <div class="card border-right-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xl text-center font-weight-bold text-danger text-uppercase mb-1">Payee Gateway
+                            </div>
+
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                            </div>
+
+                            <div class="text-center">
+                                <i class="fa fa-user fa-10x"></i>
+                            </div>
+                            <div class="text-xl text-center font-weight-bold text-danger text-uppercase mb-1">Add A New Payee
+                            </div>
+
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                            </div>
+
+                            <div class="text-center">
+                                <i class="fa fa-group fa-10x"></i>
+                            </div>
+                            <div class="text-xl text-center font-weight-bold text-danger text-uppercase mb-1">View My Payees
+                            </div>
+
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                            </div>
+
+                            <div class="sidebar-brand-icon text-center">
+                                <img th:src="@{/assets/pics/trbLogo.jpg}" width="50" height="50">
+                                <h6>Secure Payee Information: Verified By Royal Online Portal Security</h6>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-md-3 mb-6">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-secondary">Payee List</h6>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Payee Name</th>
+                                    <th>Payee Email</th>
+                                    <th>Payee Phone</th>
+                                    <th>Payee Account Number</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-th-each="eachRecipient : ${recipientList}">
+                                    <td><a data-th-text="${eachRecipient.name}" th:href="@{/transfer/recipient/edit?recipientName=}+${eachRecipient.name}">...</a></td>
+                                    <td data-th-text="${eachRecipient.email}">...</td>
+                                    <td data-th-text="${eachRecipient.phone}">...</td>
+                                    <td data-th-text="${eachRecipient.accountNumber}">...</td>
+                                    <td data-th-text="${eachRecipient.description}">...</td>
+                                    <!--<td><a th:href="@{/transfer/recipient/delete?recipientName=}+${eachRecipient.name}">Delete</a></td>-->
+                                    <td><a th:href="@{/transfer/recipient/delete?recipientName=}+${eachRecipient.name}"> <i class="fa fa-trash btn btn-danger"></i></a></td>
+                                    <!--<td>
+                                        <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                            data-target="#exampleModal"
+                                            th:data-whatever="@{Payee {name}(name=${eachRecipient.name})}"
+                                            th:data-linkd="@{/transfer/recipient/delete?recipientName=}+${eachRecipient.name}">
+                                        <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>-->
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <br/>
-    <div class="row">
-        <h3>List of Recipients</h3>
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
-                <tr>
-                    <th>Recipient Name</th>
-                    <th>Recipient Email</th>
-                    <th>Recipient Phone</th>
-                    <th>Recipient Account Number</th>
-                    <th>Description</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr data-th-each="eachRecipient : ${recipientList}">
-                    <td><a data-th-text="${eachRecipient.name}" th:href="@{/transfer/recipient/edit?recipientName=}+${eachRecipient.name}">...</a></td>
-                    <td data-th-text="${eachRecipient.email}">...</td>
-                    <td data-th-text="${eachRecipient.phone}">...</td>
-                    <td data-th-text="${eachRecipient.accountNumber}">...</td>
-                    <td data-th-text="${eachRecipient.description}">...</td>
-                    <td><a th:href="@{/transfer/recipient/delete?recipientName=}+${eachRecipient.name}">delete</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+
 </div>
-
-
-<div th:replace="common/header :: body-bottom-scripts"/>
+<!--<div th:replace="common/header :: body-bottom-scripts"/>-->
 
 </body>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/assets/js/date.js}"></script>
+    <script th:src="@{/assets/js/index-chart.js}"></script>
+    <script th:src="@{/assets/js/index-chart-onload.js}"></script>
+    <!--<script th:src="@{/assets/js/jquery-1.11.1.min.js}"></script>-->
+    <script th:src="@{/assets/js/canvasjs.min.js}"></script>
+</th:block>
 </html>
