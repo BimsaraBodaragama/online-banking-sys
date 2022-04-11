@@ -280,11 +280,15 @@
                                     Manager
                                 </a>-->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#RegistrationModal"
+                                <a class="dropdown-item" href="/user/profile">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    My Profile
+                                </a>
+                                <!--<a class="dropdown-item" href="#" data-toggle="modal" data-target="#RegistrationModal"
                                    sec:authorize="hasRole('ROLE_ADMIN')">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Register A New Account
-                                </a>
+                                </a>-->
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"
                                    sec:authorize="isAuthenticated()">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
