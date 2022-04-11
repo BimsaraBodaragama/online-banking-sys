@@ -16,6 +16,12 @@
         margin-left: 40px;
             }
     </style>
+
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/vendor/fontawesome-free/css/v4-shims.css}"/>
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/vendor/fontawesome-free/css/v4-shims.css}"/>
+
 </head>
 <!--<head th:replace="common/header :: common-header"/>-->
 <body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
@@ -330,6 +336,137 @@
                     </div>
                 </a>
             </div>-->
+        </div>
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+        </div>
+
+        <!-- Content Row 1 -->
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <!--<div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Number of Current Students
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <td th:text="${studentCurrentCount}">..</td>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-users fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+
+            <div class="col-xl-4 col-md-3 mb-6">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">TRANSFER MONEY BETWEEN MY ACCOUNTS
+                                </div>
+                                <div class="col-xs-3">
+                                    <i class="fa fa-exchange fa-5x"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a th:href="@{/transfer/betweenAccounts}">
+                            <div class="panel-footer">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">GO TO TRANSFER
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-3 mb-6">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">TRANSFER MONEY TO THIRD PARTY ACCOUNTS
+                                </div>
+                                <div class="col-xs-3">
+                                    <i class="fa fa-exchange fa-5x"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a th:href="@{/transfer/toSomeoneElse}">
+                            <div class="panel-footer">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">GO TO THIRD PARTY TRANSFER
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-3 mb-6">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Primary Balance:
+                                </div>
+                                <div class="col-xs-3">
+                                    <i class="fa fa-group fa-5x"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a th:href="@{/transfer/recipient}">
+                            <div class="panel-footer">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">ADD/EDIT PAYEES
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h2>Savings Balance: </h2>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <h1><i class="fa fa-usd" aria-hidden="true"></i> <span th:text="${savingsAccount.accountBalance}">...</span></h1>
+                        </div>
+                    </div>
+                </div>
+                <a th:href="@{/account/savingsAccount}">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>-->
+        </div>
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
         </div>
 
     </div>
