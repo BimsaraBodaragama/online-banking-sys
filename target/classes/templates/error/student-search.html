@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">
+
+
+<head>
+    <title>Admin Home</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Students</h1>
+    <div class="card">
+        <div class="card-body">
+            <div th:switch="${students}" class="container my-5">
+
+                <div class="form-row">
+                    <div class="input-group col-md-12 mb-3">
+                        <input type="text" id="student" class="form-control"
+                               placeholder="Enter student Admission No or Name for search"
+                               aria-label="Student Admission No" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="searchByAdmissionNo">Search By Admission No
+                            </button>
+                            <button class="btn btn-outline-secondary" type="button" id="searchByName">Search By Name
+                            </button>
+                            <button class="btn btn-outline-secondary" type="button" id="listAll">List All
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3 mb-3">
+                        <a href="/student/add" class="btn btn-primary"><i
+                                class="fa fa-group"> Add Student</i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div th:case="*">
+                        <table class="table table-striped table-responsive-md table-sm">
+                            <thead>
+                            <tr>
+                                <th>Admission No</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <p class="mb-0" th:text="${msg}">Custom message is ready, Developer team will contact you soon.</p>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+<th:block layout:fragment="script">
+    <script th:src="@{/assets/js/delete-modal.js}"></script>
+    <script th:src="@{/assets/js/student/search-student.js}"></script>
+</th:block>
+
+</html>
