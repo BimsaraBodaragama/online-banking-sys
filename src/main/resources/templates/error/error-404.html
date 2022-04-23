@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="layout">
+      layout:decorator="common/header">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Error</title>
+  <title>Error: 404</title>
+
+  <link rel="stylesheet"
+        th:href="@{/assets/css/home.css}"/>
+
+  <style>
+            .tab {
+        display: inline-block;
+        margin-left: 40px;
+            }
+    </style>
 </head>
 <body>
 

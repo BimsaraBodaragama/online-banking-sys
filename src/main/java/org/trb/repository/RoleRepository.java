@@ -1,15 +1,8 @@
 package org.trb.repository;
 
-import org.trb.model.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.trb.model.security.Role;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
-
-
-public interface RoleRepository extends JpaRepository<Role, Long> {
-
-    Optional<Role> findById(Long Id);
-
-    Optional<Role> findByName(String name);
-
+public interface RoleRepository extends CrudRepository<Role, Integer> {
+    Role findByName(String name);
 }
