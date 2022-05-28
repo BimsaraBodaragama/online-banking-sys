@@ -32,3 +32,4 @@ E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\re
 E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\service\UserService.java
 E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\repository\PrimaryAccountRepository.java
 E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\repository\PrimaryTransactionRepository.java
+E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\utils\AdminLock.java
