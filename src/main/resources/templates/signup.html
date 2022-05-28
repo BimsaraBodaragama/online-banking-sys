@@ -57,6 +57,9 @@
 <img src="/images/bann.png" alt="bann" class="center">
 
 <div class="container">
+    <div th:if="${msg}">
+        <div class="alert alert-danger" th:text="${msg}"></div>
+    </div>
 <fieldset>
     <div class="row main">
         <div class="col-md-6 col-md-offset-3">

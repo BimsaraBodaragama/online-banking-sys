@@ -101,8 +101,17 @@ public class HomeController {
             return "signup";
         } else {
         	 Set<UserRole> userRoles = new HashSet<>();
-             userRoles.add(new UserRole(user, rolerepository.findByName("ROLE_USER")));
-             userService.createUser(user, userRoles);
+            log.info("aaa555");
+             long newUserRoleId = (userRepository.findAll().size()*2)+1;
+             userRoles.add(new UserRole(user, rolerepository.findByName("ROLE_USER"), newUserRoleId));
+            log.info("aaa666");
+            User user1 = userService.createUser(user, userRoles);
+            if (user1==null){
+                model.addAttribute("msg", "Either User Name, Email, Primary " +
+                        "Account No or Savings Account No has been used by another user." +
+                        " Please check again and try re-entering values for relevant fields!");
+                return "signup";
+            }
 
             return "redirect:/";
         }
