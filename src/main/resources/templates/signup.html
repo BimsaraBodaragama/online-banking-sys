@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <style>
+        img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css' />
+
+    <!--bootstrap date-time picker-->
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+    <!--data table-->
+    <link href="/css/jquery.dataTable.min.css" rel="stylesheet" />
+    <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+
+    <title>TRB Online Registration</title>
+</head>
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<!--<head th:replace="common/header :: navbar" />-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/signup}">THE ROYAL BANK : ONLINE BANKING PORTAL REGISTRATION</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+<img src="/images/bann.png" alt="bann" class="center">
+
+<div class="container">
+    <div th:if="${msg}">
+        <div class="alert alert-danger" th:text="${msg}"></div>
+    </div>
+<fieldset>
+    <div class="row main">
+        <div class="col-md-6 col-md-offset-3">
+            <!--<div class="panel-heading">
+                <div class="panel-title text-center">
+                    <h2 th:text="#{title.signupForm}">signup</h2>
+                    <hr />
+                </div>
+            </div>-->
+            <div class="main-login main-center">
+                <form class="form-horizontal" method="post" th:object="${user}" th:action="@{/signup}">
+
+                    <div class="form-group">
+                        <label for="firstName" class="cols-sm-2 control-label">First Name</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" th:value="${user.firstName}" id="firstName" name="firstName" roleId="firstname"  placeholder="Enter your first name" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName" class="cols-sm-2 control-label">Last Name</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" th:value="${user.lastName}" id="lastName" name="lastName" roleId="lastName"  placeholder="Enter your last name" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="cols-sm-2 control-label">Phone</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" th:value="${user.phone}" id="phone" name="phone" roleId="phone"  placeholder="xxx-xxx-xxxx" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="cols-sm-2 control-label">Your Email</label><span class="bg-danger pull-right" th:if="${emailExists}">Email already exists</span>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" th:value="${user.email}" id="email" name="email" roleId="email"  placeholder="Enter your Email" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="cols-sm-2 control-label">Username</label><span class="bg-danger pull-right" th:if="${usernameExists}">Username already exists</span>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" th:value="${user.username}" id="username" name="username" roleId="username"  placeholder="Enter your Username" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="cols-sm-2 control-label">Password</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" th:value="${user.password}" id="password" name="password" roleId="password"  placeholder="Enter your Password" required="required"/>
+                            </div>
+                            <!--<div class="checkbox">
+                                <label>
+                                    <input id="showPassword" type="checkbox" />Show Password
+                                </label>
+                            </div>-->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstName" class="cols-sm-2 control-label">Primary Account No</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" th:value="${user.primaryAccountNo}" id="primaryAccountNo" name="primaryAccountNo" roleId="primaryAccountNo"  placeholder="Enter the primary account no here" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName" class="cols-sm-2 control-label">Primary Account Balance</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-usd fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" th:value="${user.primaryAccountBalance}" id="primaryAccountBalance" name="primaryAccountBalance" roleId="primaryAccountBalance"  placeholder="Enter the primary account no here" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstName" class="cols-sm-2 control-label">Savings Account No</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" th:value="${user.savingsAccountNo}" id="savingsAccountNo" name="savingsAccountNo" roleId="savingsAccountNo"  placeholder="Enter the savings account no here" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName" class="cols-sm-2 control-label">Primary Account Balance</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-usd fa" aria-hidden="true"></i></i></span>
+                                <input type="text" class="form-control" th:value="${user.savingsAccountBalance}" id="savingsAccountBalance" name="savingsAccountBalance" roleId="savingsAccountBalance"  placeholder="Enter the primary account no here" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group">-->
+                        <!--<label for="confirm" class="cols-sm-2 control-label">Confirm Secret</label>-->
+                        <!--<div class="cols-sm-10">-->
+                            <!--<div class="input-group">-->
+                                <!--<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>-->
+                                <!--<input type="secret" class="form-control" name="confirm" roleId="confirm"  placeholder="Confirm your Secret" required="required"/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="form-group ">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Sign up!</button>
+                    </div>
+
+                    <hr />
+
+                    <div class="form-group ">
+                        <a  class="btn btn-info btn-lg btn-block login-button" th:href="@{/}">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </fieldset>
+</div>
+
+
+<div th:replace="common/header :: body-bottom-scripts" />
+
+</body>
+</html>
