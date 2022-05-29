@@ -10,6 +10,13 @@ public class PasswordUpdater {
 
     private String confirmedNewPassword;
 
+    public PasswordUpdater() {
+    }
+
+    public PasswordUpdater(long userId) {
+        this.userId = userId;
+    }
+
     public long getUserId() {
         return userId;
     }
