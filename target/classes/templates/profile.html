@@ -51,7 +51,9 @@
     </div>-->
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-
+        <div th:if="${msg}">
+            <div class="alert alert-danger" th:text="${msg}"></div>
+        </div>
     </div>
 
     <!-- Content Row 1 -->
@@ -89,7 +91,7 @@
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 
                             </div>
-                            <form method="post" th:action="@{/user/profile}">
+                            <form class="form-user" method="post" th:object="${user}" th:action="@{/profile}">
                                 <input type="hidden" name="id" th:value="${user.userId}"/>
 
                                 <div class="form-group">
@@ -194,14 +196,19 @@
 
                             </div>
 
+                            <form method="post" th:object="${passwordUpdater}" th:action="@{/profile-change-password}"></form>
                                 <div id="errormsg" style="display:none"></div>
+
+                                <input type="hidden" name="userId" th:value="${user.userId}"/>
+
                                 <div class="form-group">
                                     <label for="phone" class="cols-sm-2 control-label">Old Password</label>
                                     <div class="cols-sm-4">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
-                                            <input type="password" class="form-control" id="oldpass" name="oldPassword"
+                                            <input type="password" class="form-control" th:value="${passwordUpdater.oldPassword}" id="oldPassword" name="oldPassword"
                                                    roleId="oldPassword" placeholder="" required="required"/>
+                                            <!--<span class="text-danger" th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"></span>-->
                                         </div>
                                     </div>
                                 </div>
@@ -210,8 +217,9 @@
                                     <div class="cols-sm-4">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
-                                            <input type="password" class="form-control" id="pass" name="password"
+                                            <input type="password" class="form-control" th:value="${passwordUpdater.newPassword}" id="newPassword" name="newPassword"
                                                    roleId="newPassword" placeholder="" required="required"/>
+                                            <!--<span class="text-danger" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></span>-->
                                         </div>
                                     </div>
                                 </div>
@@ -220,17 +228,20 @@
                                     <div class="cols-sm-4">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
-                                            <input type="password" class="form-control" id="passConfirm" name="confirmPassword"
-                                                   roleId="newPassword" placeholder="" required="required"/>
+                                            <input type="password" class="form-control" th:value="${passwordUpdater.confirmedNewPassword}" id="confirmedNewPassword" name="confirmedNewPassword"
+                                                   roleId="confirmedNewPassword" placeholder="" required="required"/>
+                                            <!--<span class="text-danger" th:if="${#fields.hasErrors('confirmedNewPassword')}" th:errors="*{confirmedNewPassword}"></span>-->
                                         </div>
                                     </div>
                                 </div>
                                 <span id="error" style="display:none">Password mismatch</span>
                                 <div class="form-group ">
-                                    <button type="submit" class="btn btn-primary btn-block" onclick="savePass()">Change Password
+                                    <button type="submit" class="btn btn-primary btn-block">Change Password
                                     </button>
+                                    <!--<button type="submit" class="btn btn-primary btn-block" onclick="savePass()">Change Password
+                                    </button>-->
                                 </div>
-
+                            </form>
 
 
                                 <script src="jquery.min.js"></script>

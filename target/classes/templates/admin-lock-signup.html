@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<!--<head th:replace="common/header :: common-header"/>-->
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <style>
+        img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+    </style>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+
+  <title>ROYAL ONLINE BANKING PORTAL</title>
+
+  <!--<link rel="shortcut icon" th:href="@{/assets/pics/TheSomethingCompanyLogo1.jpg}" />-->
+  <!--<link rel="shortcut icon" th:href="@{/assets/pics/NSISlogo.png}" />-->
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+              aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span> <span
+              class="icon-bar"></span> <span class="icon-bar"></span> <span
+              class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" th:href="@{/}">THE ROYAL BANK : ONLINE BANKING PORTAL</a>
+    </div>
+  </div>
+</nav>
+<br>
+<br>
+<!-- Login Section -->
+
+<img src="/images/bann.png" alt="bann" class="center">
+
+<div class="container">
+  <div th:if="${msg}">
+    <div class="alert alert-danger" th:text="${msg}"></div>
+  </div>
+  <div class="row ">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="bg-danger" th:if="${param.error}">
+        Invalid username and secret.
+      </div>
+      <div class="bg-danger" th:if="${param.logout}">
+        You have been logged out.
+      </div>
+      <form class="form-adminLock"  method="post" th:object="${adminLock}" th:action="@{/admin-lock-signup-get}">
+        <h2 class="form-adminLock-heading">To Sign Up A New User</h2>
+
+        <!--<div class="form-group">
+          <div class="row">
+            <label for="password" class="cols-sm-2 control-label">Password</label>
+            <div class="col-sm-6 col-sm-offset-3">
+              <div class="input-group">
+                <input type="password" class="form-control" th:value="${user.password}" id="password" name="password" roleId="password"  placeholder="Enter your Password" required="required"/>
+              </div>
+            </div>
+          </div>
+        </div>-->
+
+        <div class="form-group">
+          <label for="password" class="sr-only">Password</label>
+          <input type="password" class="form-control" th:value="${adminLock.password}" id="password" name="password" roleId="password" placeholder="Password"
+                 required="required"/>
+        </div>
+
+        <div class="form-group ">
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Go In As An Admin</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group ">
+          <a  class="btn btn-info btn-lg btn-block login-button" th:href="@{/}">Back</a>
+        </div>
+
+      </form>
+
+      <hr />
+
+      <!--<div class="form-group ">
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <a type="submit" class="btn btn-info btn-lg btn-block login-button" th:href="@{/signup}">Go In As An Admin</a>
+          </div>
+        </div>
+      </div>-->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+
+      <!--<div class="copyright text-center my-auto">
+          <img th:href="@{/assets/pics/TheSomethingCompanyLogo1.jpg}" width="700" height="300">
+      </div>-->
+
+      <div class="copyright text-center my-auto">
+        <span>The Something Company</span>
+      </div>
+      <div class="copyright text-center my-auto">
+      </div>
+      <div class="copyright text-center my-auto">
+        <span>Copyright &copy; 2022</span>
+      </div>
+      <!--<div class="copyright text-center my-auto">
+      </div>
+      <div class="copyright text-center my-auto">
+          <span>Copyright &copy; 2021</span>
+      </div>-->
+    </div>
+  </footer>
+</div>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
+
