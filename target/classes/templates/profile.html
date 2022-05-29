@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="common/header" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title>Home</title>
+
+    <link rel="stylesheet"
+          th:href="@{/assets/css/home.css}"/>
+
+    <style>
+            .tab {
+        display: inline-block;
+        margin-left: 40px;
+            }
+    </style>
+
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/vendor/fontawesome-free/css/v4-shims.css}"/>
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/vendor/fontawesome-free/css/v4-shims.css}"/>
+
+</head>
+
+<!--<head th:replace="common/header :: common-header"/>-->
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<!--<head th:replace="common/header :: navbar"/>-->
+
+<div layout:fragment="content">
+
+    <!--<div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Deposit</h1>
+        &lt;!&ndash;        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i&ndash;&gt;
+        &lt;!&ndash;                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>&ndash;&gt;
+    </div>-->
+
+    <!--<div class="row">
+        <div class="col-xl-12 col-md-2 mb-6">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="text-center">
+                            <h1>DEPOSIT</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-12">
+        <div class="text-center">
+            <div th:if="${msg}">
+                <div class="alert alert-danger" th:text="${msg}"></div>
+            </div>
+        <div class="text-center">
+    </div>
+
+
+    <!-- Content Row 1 -->
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <!--<div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Number of Current Students
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                <td th:text="${studentCurrentCount}">..</td>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+
+        <div class="col-xl-8 col-md-3 mb-6">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="card-header text-center py-3">
+                                <h6 class="m-0 font-weight-bold text-secondary">My Profile</h6>
+                            </div>
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                            </div>
+                            <form method="post" th:action="@{/user/profile}">
+                                <input type="hidden" name="id" th:value="${user.userId}"/>
+
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <!--<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>-->
+                                            <input type="text" class="form-control" th:value="${user.firstName}" id="firstName"
+                                                   name="firstName" roleId="firstname" placeholder="Enter your first name"
+                                                   required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName" class="cols-sm-2 control-label">Last Name</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <!--<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>-->
+                                            <input type="text" class="form-control" th:value="${user.lastName}" id="lastName"
+                                                   name="lastName" roleId="lastName" placeholder="Enter your last name"
+                                                   required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone" class="cols-sm-2 control-label">Phone</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
+                                            <input type="text" class="form-control" th:value="${user.phone}" id="phone" name="phone"
+                                                   roleId="phone" placeholder="xxx-xxx-xxxx" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email" class="cols-sm-2 control-label">Your Email</label><span
+                                        class="bg-danger pull-right" th:if="${emailExists}">Email already exists</span>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <!--<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>-->
+                                            <input type="text" class="form-control" th:value="${user.email}" id="email" name="email"
+                                                   roleId="email" placeholder="Enter your Email" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="username" class="cols-sm-2 control-label">Username</label><span
+                                        class="bg-danger pull-right" th:if="${usernameExists}">Username already exists</span>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <!--<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>-->
+                                            <input type="text" class="form-control" th:value="${user.username}" id="username"
+                                                   name="username" roleId="username" placeholder="Enter your Username"
+                                                   required="required" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    <button type="submit" class="btn btn-primary btn-block ">Change Settings
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="card-header text-center py-3">
+                            <h6 class="m-0 font-weight-bold text-secondary">For additional information please contact the bank on info.onlineporal@trb.com</h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-3 mb-6">
+            <div class="card border-right-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="panel-title text-center">
+                                <h1 class="title">Your Account Information</h1>
+                                <hr/>
+                            </div>
+                            <table class="responstable">
+                                <tr>
+                                    <th>Primary Account Number</th>
+                                    <th>Savings Account Number</th>
+                                </tr>
+
+                                <tr>
+                                    <td data-th-text="${user.primaryAccount.accountNumber}">...</td>
+                                    <td data-th-text="${user.savingsAccount.accountNumber}">...</td>
+                                </tr>
+                            </table>
+
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                            </div>
+
+                            <form method="post" th:action="@{/user/profile/changePassword}">
+                                <input type="hidden" name="userId" th:value="${passwordUpdater.userId}"/>
+
+                                <div id="errormsg" style="display:none"></div>
+                                <div class="form-group">
+                                    <label for="phone" class="cols-sm-2 control-label">Old Password</label>
+                                    <div class="cols-sm-4">
+                                        <div class="input-group">
+                                            <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
+                                            <input type="password" class="form-control" id="oldPassword" name="oldPassword"
+                                                   roleId="oldPassword" placeholder="" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="cols-sm-2 control-label">New Password</label>
+                                    <div class="cols-sm-4">
+                                        <div class="input-group">
+                                            <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
+                                            <input type="password" class="form-control" id="newPassword" name="newPassword"
+                                                   roleId="newPassword" placeholder="" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="cols-sm-2 control-label">Confirm New Password</label>
+                                    <div class="cols-sm-4">
+                                        <div class="input-group">
+                                            <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
+                                            <input type="password" class="form-control" id="confirmedNewPassword" name="confirmedNewPassword"
+                                                   roleId="confirmedNewPassword" placeholder="" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<span id="error" style="display:none">Password mismatch</span>-->
+                                <div class="form-group ">
+                                    <button type="submit" class="btn btn-primary btn-block">Change Password
+                                    </button>
+                                    <!--<button type="submit" class="btn btn-primary btn-block" onclick="savePass()">Change Password
+                                    </button>-->
+                                </div>
+                            </form>
+
+
+                            <script src="jquery.min.js"></script>
+                            <script type="text/javascript">
+                                        var serverContext = [[@{/}]];
+                                        function savePass(){
+                                            var pass = $("#pass").val();
+                                            var valid = pass == $("#passConfirm").val();
+                                            if(!valid) {
+                                              $("#error").show();
+                                              return;
+                                            }
+                                            $.post(serverContext + "user/updatePassword",
+                                              {password: pass, oldpassword: $("#oldpass").val()} ,function(data){
+                                                window.location.href = serverContext +"/home.html?message="+data.message;
+                                            })
+                                            .fail(function(data) {
+                                                $("#errormsg").show().html(data.responseJSON.message);
+                                            });
+                                        }
+                                    </script>
+
+
+                            <div class="sidebar-brand-icon text-center">
+                                <img th:src="@{/assets/pics/trbLogo.jpg}" width="50" height="50">
+                                <h6>Secured Personal Information: Verified By Royal Online Portal Security</h6>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+    </div>
+
+
+</div>
+<!--<div th:replace="common/header :: body-bottom-scripts"/>-->
+
+</body>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/assets/js/date.js}"></script>
+    <script th:src="@{/assets/js/index-chart.js}"></script>
+    <script th:src="@{/assets/js/index-chart-onload.js}"></script>
+    <!--<script th:src="@{/assets/js/jquery-1.11.1.min.js}"></script>-->
+    <script th:src="@{/assets/js/canvasjs.min.js}"></script>
+</th:block>
+</html>
