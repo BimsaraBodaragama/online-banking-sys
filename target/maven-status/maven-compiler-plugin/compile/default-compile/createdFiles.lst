@@ -1,5 +1,6 @@
 org\trb\web\HomeController.class
 org\trb\repository\SavingsAccountRepository.class
+org\trb\utils\PasswordUpdater.class
 org\trb\web\UserController.class
 org\trb\model\PrimaryTransaction.class
 org\trb\constraint\FieldMatch$List.class

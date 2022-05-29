@@ -19,6 +19,7 @@ E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\re
 E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\repository\RecipientRepository.java
 E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\repository\SavingsAccountRepository.java
 E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\service\TransactionService.java
+E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\utils\PasswordUpdater.java
 E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\constraint\FieldMatch.java
 E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\config\RequestFilter.java
 E:\workspace\springboot\Uni\Sem 4\SE\online-banking-sys\src\main\java\org\trb\resource\UserResource.java

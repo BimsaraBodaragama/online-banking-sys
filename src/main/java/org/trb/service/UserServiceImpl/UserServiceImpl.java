@@ -2,7 +2,6 @@ package org.trb.service.UserServiceImpl;
 
 import org.trb.model.PrimaryAccount;
 import org.trb.model.SavingsAccount;
-import org.trb.model.security.Role;
 import org.trb.repository.PrimaryAccountRepository;
 import org.trb.repository.RoleRepository;
 import org.trb.repository.SavingsAccountRepository;
@@ -18,8 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -161,5 +160,10 @@ public class UserServiceImpl implements UserService{
         System.out.println(user.isEnabled());
         userrepository.save(user);
         System.out.println(username + " is disabled.");
+    }
+
+    @Override
+    public Optional<User> findByID(long userId) {
+        return userrepository.findById(userId);
     }
 }
