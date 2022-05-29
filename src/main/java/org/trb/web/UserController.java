@@ -2,9 +2,6 @@ package org.trb.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.trb.model.User;
 import org.trb.repository.UserRepository;
 import org.trb.service.UserService;
@@ -14,17 +11,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.trb.utils.AdminLock;
 import org.trb.utils.PasswordUpdater;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import java.security.SecureRandom;
 
 import java.security.Principal;
-import java.security.SecureRandom;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    Logger log = LoggerFactory.getLogger(UserController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -37,7 +36,7 @@ public class UserController {
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profile(Principal principal, Model model) {
         User user = userService.findByUsername(principal.getName());
-        PasswordUpdater passwordUpdater = new PasswordUpdater();
+        PasswordUpdater passwordUpdater = new PasswordUpdater(user.getUserId());
 
         model.addAttribute("user", user);
         model.addAttribute("passwordUpdater", passwordUpdater);
@@ -47,79 +46,63 @@ public class UserController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
     public String profilePost(@ModelAttribute("user") User newUser, Model model) {
-        log.info("bbbbb");
-        Optional<User> userOptional = userService.findByID(newUser.getUserId());
-
-        if (!userOptional.isPresent()){
-            log.info("qqqqq");
-        }
-        User user = userOptional.get();
-
-        log.info("ddddd");
+        User user = userService.findByUsername(newUser.getUsername());
         user.setUsername(newUser.getUsername());
-        log.info("eeee");
         user.setFirstName(newUser.getFirstName());
-        log.info("ffff");
         user.setLastName(newUser.getLastName());
-        log.info("ggggg");
         user.setEmail(newUser.getEmail());
-        log.info("hhhh");
         user.setPhone(newUser.getPhone());
-        log.info("iiii");
+
+        PasswordUpdater passwordUpdater = new PasswordUpdater(user.getUserId());
 
         model.addAttribute("user", user);
-        log.info("jjjjj");
+        model.addAttribute("passwordUpdater", passwordUpdater);
+
         userService.saveUser(user);
-        log.info("kkkkk");
 
         return "profile";
     }
 
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
-    }
+    @RequestMapping(value = "/profile/changePassword", method = RequestMethod.POST)
+    public String profileChangePasswordPost(@ModelAttribute("passwordUpdater") PasswordUpdater newPasswordUpdater, Model model) {
 
-    @RequestMapping(value = "/profile-change-password", method = RequestMethod.GET)
-    public String profileChangePasswordGet(@ModelAttribute("passwordUpdater") PasswordUpdater passwordUpdater, BindingResult result, Model model) {
-        return "profile";
-    }
-
-        @RequestMapping(value = "/profile-change-password", method = RequestMethod.POST)
-    public String profileChangePasswordPost(@ModelAttribute("passwordUpdater") PasswordUpdater passwordUpdater, BindingResult result, Model model) {
-
-        log.info("AAAAAAAAAAAAAAAAAAAAAAA");
+        PasswordUpdater passwordUpdater = newPasswordUpdater;
 
         long userId = passwordUpdater.getUserId();
         String oldPassword = passwordUpdater.getOldPassword();
         String newPassword = passwordUpdater.getNewPassword();
         String confirmedNewPassword = passwordUpdater.getConfirmedNewPassword();
 
+        Optional<User> byId = userrepository.findById(userId);
+        if (!byId.isPresent()){
+            log.info("Unknown Error. User not found.User Id: " + userId + " not found.");
+            model.addAttribute("msg", "Unknown Error Occurred: User NOt Found" +
+                    ". Please contact the bank.");
+            PasswordUpdater passwordUpdaterReBound = new PasswordUpdater();
+            model.addAttribute("passwordUpdater", passwordUpdaterReBound);
+            return "profile";
+        }
+        User user = byId.get();
+
         if(!newPassword.equals(confirmedNewPassword)){
             log.info("New Password Mismatched");
-            result.addError(new FieldError("passwordUpdater",
-                    "confirmedNewPassword", "New Password Mismatched"));
             model.addAttribute("msg", "New Password Mismatched");
+            PasswordUpdater passwordUpdaterReBound = new PasswordUpdater(userId);
+            model.addAttribute("user", user);
+            model.addAttribute("passwordUpdater", passwordUpdaterReBound);
             return "profile";
         }
 
         BCryptPasswordEncoder bCryptPasswordEncoder = passwordEncoder();
-        String encryptedOldPassword = bCryptPasswordEncoder.encode(oldPassword);
+        /*String encryptedOldPassword = bCryptPasswordEncoder.encode(oldPassword);
+        log.info("/////////////////===== " + encryptedOldPassword + " =============");*/
 
-        Optional<User> byId = userrepository.findById(userId);
-        if (!byId.isPresent()){
-            log.info("Unknown Error. User not found.");
-            model.addAttribute("msg", "Unknown Error Occurred: User NOt Found" +
-                    ". Please contact the bank.");
-            return "profile";
-        }
-
-        User user = byId.get();
-
-        if(!user.getPassword().equals(oldPassword)){
+        if(!passwordChecker(passwordUpdater, user)){
             log.info("Incorrect Old Password");
-            result.addError(new FieldError("passwordUpdater",
-                    "oldPassword", "Incorrect Old Password"));
             model.addAttribute("msg", "Incorrect Old Password");
+            PasswordUpdater passwordUpdaterReBound = new PasswordUpdater(userId);
+            model.addAttribute("user", user);
+            model.addAttribute("passwordUpdater", passwordUpdaterReBound);
             return "profile";
         }
 
@@ -129,11 +112,31 @@ public class UserController {
 
         userService.saveUser(user);
 
-        return "profile";
+        return "redirect:/user/profile";
+
     }
 
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
+    }
 
+    public boolean passwordChecker(PasswordUpdater passwordUpdater, User user) {
 
+        BCryptPasswordEncoder bCryptPasswordEncoder = passwordEncoder();
+        String encryptedAdminPassword = bCryptPasswordEncoder.encode(passwordUpdater.getOldPassword());
+
+        log.info("OLDPASSWORD====" + encryptedAdminPassword + "====");
+
+        User adminTRB = user;
+        if(adminTRB.getPassword().equals(encryptedAdminPassword)){
+            log.info("Matching Old Password.");
+            return true;
+
+        }
+
+        log.info("Old Password Mismatched.");
+        return false;
+
+    }
 
 }
-
