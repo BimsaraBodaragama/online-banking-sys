@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService{
             LOG.info(user.getEmail());
             LOG.info(user.getFirstName());
             LOG.info(user.getLastName());
+            LOG.info(user.getUserCode());
             LOG.info(user.getPassword());
             LOG.info(user.getPhone());
             LOG.info(user.getAuthorities().toString());
