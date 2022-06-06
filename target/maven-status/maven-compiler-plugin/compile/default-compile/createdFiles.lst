@@ -1,11 +1,13 @@
 org\trb\web\HomeController.class
 org\trb\repository\SavingsAccountRepository.class
+org\trb\utils\PasswordUpdater.class
 org\trb\web\UserController.class
 org\trb\model\PrimaryTransaction.class
 org\trb\constraint\FieldMatch$List.class
 org\trb\config\RequestFilter.class
 org\trb\repository\SavingsTransactionRepository.class
 org\trb\constraint\FieldMatch.class
+org\trb\utils\AdminLock.class
 org\trb\resource\UserResource.class
 org\trb\model\Recipient.class
 org\trb\service\UserServiceImpl\AccountServiceImpl.class

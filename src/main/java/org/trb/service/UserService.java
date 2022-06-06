@@ -4,6 +4,7 @@ import org.trb.model.User;
 import org.trb.model.security.UserRole;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface UserService {
@@ -28,4 +29,6 @@ public interface UserService {
     void enableUser (String username);
 
     void disableUser (String username);
+
+    Optional<User> findByID(long userId);
 }
