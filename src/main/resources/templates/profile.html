@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="common/header">
+      layout:decorator="common/header" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>Home</title>
@@ -50,9 +50,17 @@
         </div>
     </div>-->
 
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-
+    <div class="d-sm-flex align-items-center justify-content-between mb-12">
+        <div class="text-center">
+            <div th:if="${msg}">
+                <div class="alert alert-danger" th:text="${msg}"></div>
+            </div>
+            <div th:if="${msg1}">
+                <div class="alert alert-success" th:text="${msg1}"></div>
+            </div>
+        <div class="text-center">
     </div>
+
 
     <!-- Content Row 1 -->
     <div class="row">
@@ -87,14 +95,14 @@
                                 <h6 class="m-0 font-weight-bold text-secondary">My Profile</h6>
                             </div>
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                
+
                             </div>
                             <form method="post" th:action="@{/user/profile}">
                                 <input type="hidden" name="id" th:value="${user.userId}"/>
 
                                 <div class="form-group">
                                     <label for="firstName">First Name</label>
-                                    <div class="cols-sm-8">
+                                    <div class="cols-sm-10">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>-->
                                             <input type="text" class="form-control" th:value="${user.firstName}" id="firstName"
@@ -106,7 +114,7 @@
 
                                 <div class="form-group">
                                     <label for="lastName" class="cols-sm-2 control-label">Last Name</label>
-                                    <div class="cols-sm-8">
+                                    <div class="cols-sm-10">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>-->
                                             <input type="text" class="form-control" th:value="${user.lastName}" id="lastName"
@@ -118,7 +126,7 @@
 
                                 <div class="form-group">
                                     <label for="phone" class="cols-sm-2 control-label">Phone</label>
-                                    <div class="cols-sm-8">
+                                    <div class="cols-sm-10">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
                                             <input type="text" class="form-control" th:value="${user.phone}" id="phone" name="phone"
@@ -130,10 +138,9 @@
                                 <div class="form-group">
                                     <label for="email" class="cols-sm-2 control-label">Your Email</label><span
                                         class="bg-danger pull-right" th:if="${emailExists}">Email already exists</span>
-                                    <div class="cols-sm-8">
+                                    <div class="cols-sm-10">
                                         <div class="input-group">
-                                <!--<span class="input-group-addon"><i class="fa fa-envelope fa"
-                                                                   aria-hidden="true"></i></span>-->
+                                            <!--<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>-->
                                             <input type="text" class="form-control" th:value="${user.email}" id="email" name="email"
                                                    roleId="email" placeholder="Enter your Email" required="required"/>
                                         </div>
@@ -143,12 +150,12 @@
                                 <div class="form-group">
                                     <label for="username" class="cols-sm-2 control-label">Username</label><span
                                         class="bg-danger pull-right" th:if="${usernameExists}">Username already exists</span>
-                                    <div class="cols-sm-8">
+                                    <div class="cols-sm-10">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>-->
                                             <input type="text" class="form-control" th:value="${user.username}" id="username"
                                                    name="username" roleId="username" placeholder="Enter your Username"
-                                                   required="required" disabled/>
+                                                   required="required" readonly/>
                                         </div>
                                     </div>
                                 </div>
@@ -194,13 +201,16 @@
 
                             </div>
 
+                            <form method="post" th:action="@{/user/profile/changePassword}">
+                                <input type="hidden" name="userId" th:value="${passwordUpdater.userId}"/>
+
                                 <div id="errormsg" style="display:none"></div>
                                 <div class="form-group">
                                     <label for="phone" class="cols-sm-2 control-label">Old Password</label>
                                     <div class="cols-sm-4">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
-                                            <input type="password" class="form-control" id="oldpass" name="oldPassword"
+                                            <input type="password" class="form-control" id="oldPassword" name="oldPassword"
                                                    roleId="oldPassword" placeholder="" required="required"/>
                                         </div>
                                     </div>
@@ -210,7 +220,7 @@
                                     <div class="cols-sm-4">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
-                                            <input type="password" class="form-control" id="pass" name="password"
+                                            <input type="password" class="form-control" id="newPassword" name="newPassword"
                                                    roleId="newPassword" placeholder="" required="required"/>
                                         </div>
                                     </div>
@@ -220,21 +230,23 @@
                                     <div class="cols-sm-4">
                                         <div class="input-group">
                                             <!--<span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>-->
-                                            <input type="password" class="form-control" id="passConfirm" name="confirmPassword"
-                                                   roleId="newPassword" placeholder="" required="required"/>
+                                            <input type="password" class="form-control" id="confirmedNewPassword" name="confirmedNewPassword"
+                                                   roleId="confirmedNewPassword" placeholder="" required="required"/>
                                         </div>
                                     </div>
                                 </div>
-                                <span id="error" style="display:none">Password mismatch</span>
+                                <!--<span id="error" style="display:none">Password mismatch</span>-->
                                 <div class="form-group ">
-                                    <button type="submit" class="btn btn-primary btn-block" onclick="savePass()">Change Password
+                                    <button type="submit" class="btn btn-primary btn-block">Change Password
                                     </button>
+                                    <!--<button type="submit" class="btn btn-primary btn-block" onclick="savePass()">Change Password
+                                    </button>-->
                                 </div>
+                            </form>
 
 
-
-                                <script src="jquery.min.js"></script>
-                                    <script type="text/javascript">
+                            <script src="jquery.min.js"></script>
+                            <script type="text/javascript">
                                         var serverContext = [[@{/}]];
                                         function savePass(){
                                             var pass = $("#pass").val();

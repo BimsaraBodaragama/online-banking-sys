@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="common/header">
+
+<head>
+  <title>Error</title>
+
+  <link rel="stylesheet"
+        th:href="@{/assets/css/home.css}"/>
+
+  <style>
+            .tab {
+        display: inline-block;
+        margin-left: 40px;
+            }
+    </style>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+  <div class="bd-example">
+
+
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    <h4 class="alert-heading">Opsss!</h4>
+    <p>For you attention,</p>
+    <hr>
+    <p class="mb-0" th:text="${msg}">Custom message is ready, Developer team will contact you soon.</p>
+  </div>
+
+  <div class="but-row">
+    <input type="button" class="btn btn-primary" value="Back" onclick="history.back()">
+  </div>
+
+</div>
+</div>
+
+</body>
+<th:block layout:fragment="script">
+  <script th:src="@{/assets/js/date.js}"></script>
+  <script th:src="@{/assets/js/index-chart.js}"></script>
+  <script th:src="@{/assets/js/index-chart-onload.js}"></script>
+  <!--<script th:src="@{/assets/js/jquery-1.11.1.min.js}"></script>-->
+  <script th:src="@{/assets/js/canvasjs.min.js}"></script>
+</th:block>
+</html>
