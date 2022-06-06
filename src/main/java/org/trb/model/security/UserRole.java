@@ -17,6 +17,12 @@ public class UserRole {
         this.role = role;
     }
 
+    public UserRole(User user, Role role, long userRoleId) {
+        this.userRoleId = userRoleId;
+        this.user = user;
+        this.role = role;
+    }
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
