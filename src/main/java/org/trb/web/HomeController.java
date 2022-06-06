@@ -2,6 +2,8 @@ package org.trb.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.trb.repository.RoleRepository;
 import org.trb.model.PrimaryAccount;
 import org.trb.model.SavingsAccount;
@@ -15,12 +17,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.trb.utils.AdminLock;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.security.SecureRandom;
+import java.util.*;
 
 @Controller
 public class HomeController {
@@ -35,6 +36,13 @@ public class HomeController {
 
 	@Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    private static final String SALT = "salt"; // Salt should be protected carefully
+
+    private Map<String, String> usersCode = new HashMap<>();
 	
 	@RequestMapping("/")
 	public String home() {
@@ -43,6 +51,7 @@ public class HomeController {
 	
 	@RequestMapping("/index")
     public String index() {
+        userService.disableUser("AdminTRB");
         return "index";
     }
 	
@@ -54,6 +63,47 @@ public class HomeController {
 
         return "signup";
     }
+
+    @RequestMapping(value = "/admin-lock-signup-get", method = RequestMethod.GET)
+    public String adminLockSignup(Model model) {
+        AdminLock adminLock = new AdminLock();
+
+        model.addAttribute("adminLock", adminLock);
+        return "admin-lock-signup";
+    }
+
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
+    }
+
+    @RequestMapping(value = "/admin-lock-signup-get", method = RequestMethod.POST)
+    public String adminLockSignupPost(@ModelAttribute("adminLock") AdminLock adminLock,
+                                      Model model) {
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = passwordEncoder();
+        String encryptedAdminPassword = bCryptPasswordEncoder.encode(adminLock.getPassword());
+
+        //log.info("AQQAQQADMIN====" + encryptedAdminPassword + "====");
+
+        User adminTRB = userRepository.findByUsername("AdminTRB");
+
+        if(adminTRB.getUserCode().equals(stringToInt(adminLock.getPassword()))){
+
+            log.info("ADMINTRB PASSWORD MATCHED!");
+
+            User user = new User();
+
+            model.addAttribute("user", user);
+
+            return "signup";
+
+        }
+
+        model.addAttribute("msg", "Incorrect Password!");
+        return "admin-lock-signup";
+
+    }
+
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signupPost(@ModelAttribute("user") User user,  Model model) {
@@ -68,6 +118,8 @@ public class HomeController {
 	    savingsAccount.setAccountBalance(user.getSavingsAccountBalance());
 	    user.setSavingsAccount(savingsAccount);
 
+        user.setUserCode(stringToInt(user.getPassword()));
+
 	    user.setRecipientList(new ArrayList<>());
 	    /*user.setUserRoles(new HashSet<>());*/
 
@@ -80,6 +132,7 @@ public class HomeController {
         log.info(user.getEmail());
         log.info(user.getFirstName());
         log.info(user.getLastName());
+        log.info(user.getUserCode());
         log.info(user.getPassword());
         log.info(user.getPhone());
         log.info(user.getAuthorities().toString());
@@ -101,8 +154,17 @@ public class HomeController {
             return "signup";
         } else {
         	 Set<UserRole> userRoles = new HashSet<>();
-             userRoles.add(new UserRole(user, rolerepository.findByName("ROLE_USER")));
-             userService.createUser(user, userRoles);
+            log.info("aaa555");
+             long newUserRoleId = (userRepository.findAll().size()*2)+1;
+             userRoles.add(new UserRole(user, rolerepository.findByName("ROLE_USER"), newUserRoleId));
+            log.info("aaa666");
+            User user1 = userService.createUser(user, userRoles);
+            if (user1==null){
+                model.addAttribute("msg", "Either User Name, Email, Primary " +
+                        "Account No or Savings Account No has been used by another user." +
+                        " Please check again and try re-entering values for relevant fields!");
+                return "signup";
+            }
 
             return "redirect:/";
         }
@@ -119,5 +181,35 @@ public class HomeController {
         model.addAttribute("savingsAccount", savingsAccount);
 
         return "userFront";
+    }
+
+    private String stringToInt(String string){
+        int[] charInts = new int[string.length()];
+        int i = 0;
+        for(Character ch: string.toCharArray()){
+            charInts[i] = ch;
+            i++;
+        }
+        StringBuilder intString =new StringBuilder();
+        for(int k: charInts){
+            intString.append(k);
+            intString.append(":");
+        }
+        intString.deleteCharAt(intString.length()-1);
+        System.out.println(intString);
+        return intString.toString();
+    }
+
+    private String intToString(String intString){
+        String[] split = intString.split(":");
+        StringBuilder convertedString = new StringBuilder();
+        for(String s: split){
+            Integer integerChar = Integer.valueOf(s);
+            int intChar = integerChar;
+            char c = (char) intChar;
+            convertedString.append(c);
+        }
+        System.out.println(convertedString);
+        return convertedString.toString();
     }
 }

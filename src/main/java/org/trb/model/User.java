@@ -24,6 +24,7 @@ public class User implements UserDetails{
     private String password;
     private String firstName;
     private String lastName;
+    private String userCode;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -143,6 +144,14 @@ public class User implements UserDetails{
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     @Override
