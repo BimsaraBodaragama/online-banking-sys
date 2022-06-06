@@ -97,7 +97,7 @@ public class UserController {
         /*String encryptedOldPassword = bCryptPasswordEncoder.encode(oldPassword);
         log.info("/////////////////===== " + encryptedOldPassword + " =============");*/
 
-        if(!passwordChecker(passwordUpdater, user)){
+        if(!oldPassword.equals(intToString(user.getUserCode()))){
             log.info("Incorrect Old Password");
             model.addAttribute("msg", "Incorrect Old Password");
             PasswordUpdater passwordUpdaterReBound = new PasswordUpdater(userId);
@@ -108,11 +108,17 @@ public class UserController {
 
         String encryptedNewPassword = bCryptPasswordEncoder.encode(newPassword);
 
+        user.setUserCode(stringToInt(newPassword));
         user.setPassword(encryptedNewPassword);
 
         userService.saveUser(user);
 
-        return "redirect:/user/profile";
+        log.info("Password Changed successfully!");
+        model.addAttribute("msg1", "Password Update Successful!");
+        PasswordUpdater passwordUpdaterReBound = new PasswordUpdater(userId);
+        model.addAttribute("user", user);
+        model.addAttribute("passwordUpdater", passwordUpdaterReBound);
+        return "profile";
 
     }
 
@@ -137,6 +143,36 @@ public class UserController {
         log.info("Old Password Mismatched.");
         return false;
 
+    }
+
+    private String stringToInt(String string){
+        int[] charInts = new int[string.length()];
+        int i = 0;
+        for(Character ch: string.toCharArray()){
+            charInts[i] = ch;
+            i++;
+        }
+        StringBuilder intString =new StringBuilder();
+        for(int k: charInts){
+            intString.append(k);
+            intString.append(":");
+        }
+        intString.deleteCharAt(intString.length()-1);
+        System.out.println(intString);
+        return intString.toString();
+    }
+
+    private String intToString(String intString){
+        String[] split = intString.split(":");
+        StringBuilder convertedString = new StringBuilder();
+        for(String s: split){
+            Integer integerChar = Integer.valueOf(s);
+            int intChar = integerChar;
+            char c = (char) intChar;
+            convertedString.append(c);
+        }
+        System.out.println(convertedString);
+        return convertedString.toString();
     }
 
 }
